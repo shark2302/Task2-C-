@@ -15,10 +15,13 @@ Window::Window(int w, int h, string n){
 }
 
 string Window::getInfo() {
-    string res = "Name : " + name + "\nSize : " + to_string(height) + "x" + to_string(width) + "\nComponents: \n";
-    for(auto iter = components.begin(); iter != components.end(); iter++)
+    string res = "Window {size = (" + to_string(width) + " x " + to_string(height) +
+                 "), componentsCount = " + to_string(components.size()) + "} :\n";
+    int i = 1;
+    for(auto & component : components)
     {
-        res += (*iter)->getShortInfo() + "\n";
+        res += to_string(i) + ") " + component->getShortInfo() + "\n";
+        i++;
     }
     return res;
 }

@@ -17,11 +17,19 @@ list<WindowComponent *> Panel::getComponents() {
 }
 
 string Panel::getShortInfo() const {
-    string activeIfno = isActive() ? "active" : "inactive";
-    string res = Utils::repeatStr(getHierarchyLevel(), "\t") + "Panel(" + activeIfno+ ")\n";
-    for(auto iter = components.begin(); iter != components.end(); iter++)
+   string res = Utils::repeatStr(getHierarchyLevel(), "\t") +
+           "Panel{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
+           "), size = (" + to_string(getWidth()) + " x " + to_string(getHeight()) +
+           "), componentsCount = " + to_string(components.size())
+           +", "
+            "active = " + to_string(isActive()) +  "} :\n";
+    int i = 1;
+    for(auto & component : components)
     {
-        res += (*iter)->getShortInfo() + "\n";
+        res += to_string(i) + ") " + component->getShortInfo() + "\n";
+        i++;
     }
+
+    res.pop_back();
     return res;
 }

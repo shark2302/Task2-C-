@@ -18,15 +18,21 @@ protected:
 
 public:
     WindowComponent(int, int, int, int, bool);
-
     WindowComponent();
-
     string getInfo() const;
     virtual string getShortInfo() const;
     bool isActive() const;
     void setActive(bool act);
     void setHierarchyLevel(int level);
     int getHierarchyLevel() const;
+    int getX() const;
+    int getY() const;
+    int getWidth() const;
+    int getHeight() const;
+
+    int getPosX() const;
+
+    int getPosY() const;
 };
 
 

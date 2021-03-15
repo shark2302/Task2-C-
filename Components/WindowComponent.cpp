@@ -7,6 +7,10 @@
 
 using namespace std;
 
+WindowComponent::WindowComponent() {
+
+}
+
 WindowComponent::WindowComponent(int x, int y, int w, int h, bool a) {
     posX = x;
     posY = y;
@@ -41,8 +45,22 @@ void WindowComponent::setHierarchyLevel(int level) {
     hierarchyLevel = level;
 }
 
-WindowComponent::WindowComponent() {
-
+int WindowComponent::getX() const {
+    return posX;
 }
+
+int WindowComponent::getY() const {
+    return posY;
+}
+
+int WindowComponent::getWidth() const {
+    return width;
+}
+
+int WindowComponent::getHeight() const {
+    return height;
+}
+
+
 
 

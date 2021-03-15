@@ -11,9 +11,11 @@ using namespace std;
 
 class Button : public WindowComponent {
 private:
+    string text;
     void (*_action)();
 public:
-    Button(int x, int y, int w, int h, bool a, void (*action)());
+    Button(int x, int y, int w, int h, bool a, string text, void (*action)());
+    void setText(string text);
     void callAction();
     void setAction(void (*action)());
     virtual string getShortInfo() const;

@@ -31,6 +31,17 @@ list<T> ListView<T>::getItems() {
     return _items;
 }
 
+template<typename T>
+string ListView<T>::getShortInfo() const {
+    return Utils::repeatStr(getHierarchyLevel(), "\t") +
+           "ListView{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
+           "), size = (" + to_string(getWidth()) + " x " + to_string(getHeight()) +
+           "), elementsCount = " + to_string(_items.size())
+           +", "
+            "active = " + to_string(isActive()) +  "}";
+}
+
+
 /*template<typename T>
 string ListView<T> ::getStringItems() {
     string res;
@@ -41,10 +52,5 @@ string ListView<T> ::getStringItems() {
     }
     return res;
 }*/
-
-template<typename T>
-string ListView<T>::getShortInfo() const {
-    return Utils::repeatStr(getHierarchyLevel(), "\t") + "ListView(" + to_string(_items.size()) + ")";
-}
 
 #endif //TASK2_C__LISTVIEW_H
