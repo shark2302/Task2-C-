@@ -4,10 +4,7 @@
 
 #ifndef TASK2_C__BUTTON_H
 #define TASK2_C__BUTTON_H
-
-
 #include "WindowComponent.h"
-using namespace std;
 
 class Button : public WindowComponent {
 private:

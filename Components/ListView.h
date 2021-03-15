@@ -8,6 +8,7 @@
 #include <iostream>
 #include <type_traits>
 #include "WindowComponent.h"
+#include "../Utils.h"
 
 using namespace std;
 
