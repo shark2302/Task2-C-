@@ -15,7 +15,7 @@ Window::Window(int w, int h, string n){
 }
 
 string Window::getInfo() {
-    string res = "Window {size = (" + to_string(width) + " x " + to_string(height) +
+    string res = "Window {name = " + name + ", size = (" + to_string(width) + " x " + to_string(height) +
                  "), componentsCount = " + to_string(components.size()) + "} :\n";
     int i = 1;
     for(auto & component : components)
@@ -29,4 +29,8 @@ string Window::getInfo() {
 void Window::addComponent(WindowComponent *component) {
     components.push_back(component);
     component->setHierarchyLevel(1);
+}
+
+list<WindowComponent *> Window::getComponents() {
+    return components;
 }

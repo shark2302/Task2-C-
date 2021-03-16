@@ -26,3 +26,9 @@ string Label::getShortInfo() const {
                +", "
                 "active = " + to_string(isActive()) +  "}";
 }
+
+string Label::getInfo() const {
+    return "Label :\n\tPos: (" + to_string(getX()) + ", " + to_string(getY()) + ")\n\tSize: "
+           + to_string(getWidth()) + "x" + to_string(getHeight()) + "\n\tActive: " + to_string(isActive())
+           + "\n\tText: " + _text;
+}

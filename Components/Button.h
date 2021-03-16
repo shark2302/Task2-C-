@@ -16,6 +16,7 @@ public:
     void callAction();
     void setAction(void (*action)());
     virtual string getShortInfo() const;
+    virtual string getInfo() const;
 };
 
 

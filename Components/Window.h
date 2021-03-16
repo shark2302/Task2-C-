@@ -20,6 +20,7 @@ public:
     Window(int, int, string);
     string getInfo();
     void addComponent(WindowComponent* component);
+    list<WindowComponent*> getComponents();
 };
 
 

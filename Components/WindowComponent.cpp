@@ -20,13 +20,27 @@ WindowComponent::WindowComponent(int x, int y, int w, int h, bool a) {
 }
 
 string WindowComponent::getInfo() const {
-    return "Component :\nPos: (" + to_string(posX) + ", " + to_string(posY) + ")\nSize: "
-    + to_string(width) + "x" + to_string(height) + "\nActive: " + to_string(active);
+    return "Component :\n\tPos: (" + to_string(posX) + ", " + to_string(posY) + ")\n\tSize: "
+    + to_string(width) + "x" + to_string(height) + "\n\tActive: " + to_string(active);
 }
 
 string WindowComponent::getShortInfo() const {
     string activeIfno = active ? "active" : "inactive";
     return Utils::repeatStr(hierarchyLevel, "\t") + "WindowComponent(" + activeIfno + ")";
+}
+
+void WindowComponent::changePos(int x, int y) {
+    posX = x;
+    posY = y;
+}
+
+void WindowComponent::changeSize(int w, int h) {
+    width = w;
+    height = h;
+}
+
+void WindowComponent::changeActive() {
+    active = !active;
 }
 
 bool WindowComponent::isActive() const{

@@ -16,6 +16,7 @@ public:
     string getText();
     void setText(string text);
     virtual string getShortInfo() const;
+    virtual string getInfo() const;
 };
 
 

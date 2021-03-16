@@ -19,7 +19,7 @@ protected:
 public:
     WindowComponent(int, int, int, int, bool);
     WindowComponent();
-    string getInfo() const;
+    virtual string getInfo() const;
     virtual string getShortInfo() const;
     bool isActive() const;
     void setActive(bool act);
@@ -29,6 +29,9 @@ public:
     int getY() const;
     int getWidth() const;
     int getHeight() const;
+    void changePos(int x, int y);
+    void changeSize(int w, int h);
+    void changeActive();
 
     int getPosX() const;
 

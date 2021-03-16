@@ -6,15 +6,12 @@
 #include "Components/ListView.h"
 #include "Components/Panel.h"
 #include "Components/Line.h"
+#include "UI/Controller.h"
 
 using namespace std;
 
-void printHello() {
-    cout<<"Hello";
-}
-
 int main() {
-    Window w(10, 10, "wadsg");
+    /*Window w(10, 10, "wadsg");
     w.addComponent(new Label(10, 10, 10, 10, true, "asffa"));
     w.addComponent(new Button(10, 10, 10, 10, false, "hello button", &printHello));
     w.addComponent(new ListView<int> (30,30,30,30, true, list<int>{1,2,3}));
@@ -30,7 +27,7 @@ int main() {
     Line* line = new Line(30, 30, 40, 40, Color(RED), true);
     panel1->addComponent(line);
     w.addComponent(new Line(40, 50, 60, 70, Color(WHITE), false));
-    cout<<w.getInfo();
-    /*Label* label;
-    cout<<dynamic_cast<Label*>(array[1]);*/
+    cout<<w.getInfo();*/
+
+    Controller::runApp();
 }
