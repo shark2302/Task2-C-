@@ -1,7 +1,6 @@
 //
 // Created by e.kravchenko on 15.03.2021.
 //
-#include "../Utils.h"
 #include "Controller.h"
 
 
@@ -64,6 +63,18 @@ WindowComponent * Controller::createComponent() {
             return createLabel(data);
         if(select == 2)
             return createButton(data);
+        if(select == 3) {
+            cout << "\n\nSelect type of list to create :"<<endl;
+            cout << "1. int " << endl;
+            cout << "2. string " << endl;
+            int choice = Utils::getIntValueFromConsoleInBounds("Enter number 1-2 :", "Incorrect number", 1, 2);
+            int count = Utils::getIntValueFromConsoleInBounds("Enter element count from 1 to 20 :", "Incorrect number or out of bounds", 1, 20);
+            if(choice == 1)
+                return createIntListView(data, count);
+            else if(choice == 2) {
+                return createStringListView(data, count);
+            }
+        }
     }
 }
 
@@ -96,6 +107,27 @@ Button * Controller::createButton(WindowComponentData data) {
     return new Button(data.getX(), data.getY(), data.getWidth(), data.getHeight(), data.isActive(), text, action);
 }
 
+ListView<int>* Controller::createIntListView(WindowComponentData data, int count) {
+    list<int> l = list<int>();
+    for (int i = 0; i < count; ++i) {
+        int num = Utils::getIntValueFromConsole("Enter number :", "Incorrect data");
+        l.push_back(num);
+    }
+    return new ListView<int>(data.getX(), data.getY(), data.getWidth(),data.getHeight(), data.isActive(), l);
+}
+
+ListView<string>* Controller::createStringListView(WindowComponentData data, int count) {
+    list<string> l = list<string>();
+    for (int i = 0; i < count; ++i) {
+        string elem;
+        cout << "Enter string elem :";
+        cin >> elem;
+        l.push_back(elem);
+    }
+    return new ListView<string>(data.getX(), data.getY(), data.getWidth(),data.getHeight(), data.isActive(), l);
+}
+
+
 void Controller::openControl(WindowComponent *windowComponent) {
     cout<<"\n\n";
     int maxSelect = 5;
@@ -103,14 +135,21 @@ void Controller::openControl(WindowComponent *windowComponent) {
 
     Label * label = dynamic_cast<Label *>(windowComponent);
     Button * button = dynamic_cast<Button *>(windowComponent);
+    ListView<int> * intListView = dynamic_cast<ListView<int>*>(windowComponent);
+    ListView<string> * stringListView = dynamic_cast<ListView<string>*>(windowComponent);
 
     bool isLabel = label != nullptr;
     bool isButton = button != nullptr;
+    bool isIntListView = intListView != nullptr;
+    bool isStringListView = stringListView != nullptr;
 
     if(isLabel)
         maxSelect = 6;
     if(isButton)
         maxSelect = 8;
+    if(isIntListView || isStringListView)
+        maxSelect = 7;
+
 
     while(true) {
         cout << "\nSelect action to do:" << endl;
@@ -125,6 +164,10 @@ void Controller::openControl(WindowComponent *windowComponent) {
             cout << "6. Call action" << endl;
             cout << "7. Change button text" << endl;
             cout << "8. Change action" << endl;
+        }
+        if(isIntListView || isStringListView) {
+            cout << "6. Show elements" << endl;
+            cout << "7. Add element" << endl;
         }
 
         int select = Utils::getIntValueFromConsoleInBounds("Enter number 1-" + to_string(maxSelect) + " :",
@@ -155,6 +198,23 @@ void Controller::openControl(WindowComponent *windowComponent) {
             if(isButton) {
                 buttonControl(button, select);
             }
+            if(isIntListView || isStringListView){
+                if(select == 6 && isIntListView) {
+                    showListViewElems(intListView);
+                }
+                else if(select == 6 && isStringListView) {
+                    showListViewElems(stringListView);
+                }
+                else if(select == 7 && isIntListView) {
+                    intListView->addElement(Utils::getIntValueFromConsole("Enter int number :", "Incorrect data"));
+                }
+                else if(select == 7 && isStringListView) {
+                    string elem;
+                    cout << "Enter string element :";
+                    cin >> elem;
+                    stringListView->addElement(elem);
+                }
+            }
         }
     }
 }
@@ -175,13 +235,26 @@ void Controller::buttonControl(Button *button, int select) {
         cout << "\n\nSelect function:" << endl;
         cout << "1. Print hello" << endl;
         cout << "2. Print bye" << endl;
-        int select = Utils::getIntValueFromConsoleInBounds("Enter number 1-2 :", "Incorrect data", 1, 2);
+        int сhoice = Utils::getIntValueFromConsoleInBounds("Enter number 1-2 :", "Incorrect data", 1, 2);
 
-        if(select == 1)
+        if(сhoice == 1)
             action = &printHelloFunc;
-        else if(select == 2)
+        else if(сhoice == 2)
             action = &printByeFunc;
         button->setAction(action);
+    }
+}
+template<typename T>
+void Controller::showListViewElems(ListView<T>* l) {
+    if (l->isActive()) {
+        list<T> list = l->getItems();
+        cout << "\n\nList view elems :";
+        for (auto elem : list) {
+            cout << elem << endl;
+        }
+    }
+    else{
+        cout << "List view isn't active";
     }
 }
 

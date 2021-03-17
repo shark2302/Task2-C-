@@ -17,9 +17,16 @@ class ListView : public WindowComponent{
 private:
     list<T> _items;
 public:
+
      ListView(int x, int y, int w, int h, bool a, list<T> items);
+
      list<T> getItems();
-     virtual string getShortInfo() const;
+
+     void addElement(T elem);
+
+     string getShortInfo() const override;
+
+     string getInfo() const override;
 };
 
 template<typename T>
@@ -43,15 +50,17 @@ string ListView<T>::getShortInfo() const {
 }
 
 
-/*template<typename T>
-string ListView<T> ::getStringItems() {
-    string res;
-    //bool isString = is_same<T, string>::value;
-    for (string iter : _items) {
-        //string elem = isString ? iter : to_string(iter);
-        res +=  ")" + iter + "\n";
-    }
-    return res;
-}*/
+
+template<typename T>
+void ListView<T>::addElement(T elem) {
+    _items.push_back(elem);
+}
+
+template<typename T>
+string ListView<T>::getInfo() const {
+    return "ListView :\n\tPos: (" + to_string(getX()) + ", " + to_string(getY()) + ")\n\tSize: "
+           + to_string(getWidth()) + "x" + to_string(getHeight()) + "\n\tActive: " + to_string(isActive())
+           + "\n\tElemsCount: " + to_string(_items.size());
+}
 
 #endif //TASK2_C__LISTVIEW_H

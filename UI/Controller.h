@@ -10,6 +10,7 @@
 #include "../Components/Label.h"
 #include "WindowComponentData.h"
 #include "../Components/Button.h"
+#include "../Components/ListView.h"
 
 class Controller {
 public:
@@ -20,10 +21,17 @@ private:
     static WindowComponent* createComponent();
     static Label* createLabel(WindowComponentData data);
     static Button* createButton(WindowComponentData data);
+    static ListView<int> *createIntListView(WindowComponentData data, int count);
+    static ListView<string> *createStringListView(WindowComponentData data, int count);
     static void openControl(WindowComponent* windowComponent);
     static void buttonControl(Button* button, int select);
+
+    template<typename T>
+    static void showListViewElems(ListView<T> * l);
     static void printHelloFunc();
     static void printByeFunc();
+
+
 };
 
 
