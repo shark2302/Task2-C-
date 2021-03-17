@@ -17,8 +17,7 @@ list<WindowComponent *> Panel::getComponents() {
 }
 
 string Panel::getShortInfo() const {
-   string res = Utils::repeatStr(getHierarchyLevel(), "\t") +
-           "Panel{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
+   string res = "Panel{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
            "), size = (" + to_string(getWidth()) + " x " + to_string(getHeight()) +
            "), componentsCount = " + to_string(components.size())
            +", "
@@ -26,10 +25,23 @@ string Panel::getShortInfo() const {
     int i = 1;
     for(auto & component : components)
     {
-        res += to_string(i) + ") " + component->getShortInfo() + "\n";
+        res += Utils::repeatStr(component->getHierarchyLevel(), "\t") + to_string(i) + ") " + component->getShortInfo() + "\n";
         i++;
     }
 
     res.pop_back();
+    return res;
+}
+
+string Panel::getInfo() const {
+    string res = "Panel :\n\tPos: (" + to_string(getX()) + ", " + to_string(getY()) + ")\n\tSize: "
+           + to_string(getWidth()) + "x" + to_string(getHeight()) + "\n\tActive: " + to_string(isActive())
+           + "\n\tComponents:\n";
+    int i = 1;
+    for(auto & component : components)
+    {
+        res += "\t" + to_string(i) + ") " + component->getShortInfo() + "\n";
+        i++;
+    }
     return res;
 }

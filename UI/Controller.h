@@ -11,6 +11,7 @@
 #include "WindowComponentData.h"
 #include "../Components/Button.h"
 #include "../Components/ListView.h"
+#include "../Components/Panel.h"
 
 class Controller {
 public:

@@ -19,8 +19,7 @@ void Label::setText(string text) {
 }
 
 string Label::getShortInfo() const {
-        return Utils::repeatStr(getHierarchyLevel(), "\t") +
-               "Label{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
+        return "Label{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
                "), size = (" + to_string(getWidth()) + " x " + to_string(getHeight()) +
                "), text = " + _text
                +", "

@@ -28,8 +28,7 @@ void Line::setColor(Color col) {
 }
 
 string Line::getShortInfo() const {
-    return Utils::repeatStr(getHierarchyLevel(), "\t") +
-                 "Line{startPoint = (" + to_string(startX) + ", " + to_string(startY) +
+    return "Line{startPoint = (" + to_string(startX) + ", " + to_string(startY) +
                   "), endPoint = (" + to_string(endX) + ", " + to_string(endY) +
                   "), color = " + Utils::getColorString(color)
                   +", "

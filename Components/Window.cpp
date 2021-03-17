@@ -5,6 +5,7 @@
 #include <utility>
 #include <list>
 #include "Window.h"
+#include "../Utils.h"
 using namespace std;
 
 Window::Window(int w, int h, string n){
@@ -20,7 +21,7 @@ string Window::getInfo() {
     int i = 1;
     for(auto & component : components)
     {
-        res += to_string(i) + ") " + component->getShortInfo() + "\n";
+        res += Utils::repeatStr(component->getHierarchyLevel(), "\t") + to_string(i) + ") " + component->getShortInfo() + "\n";
         i++;
     }
     return res;

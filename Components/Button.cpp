@@ -23,8 +23,7 @@ void Button::setAction(void (*action)()) {
 }
 
 string Button::getShortInfo() const {
-    return Utils::repeatStr(getHierarchyLevel(), "\t") +
-           "Button{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
+    return "Button{pos = (" + to_string(getX()) + ", " + to_string(getY()) +
            "), size = (" + to_string(getWidth()) + " x " + to_string(getHeight()) +
            "), text = " + text
            +", "

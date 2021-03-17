@@ -61,9 +61,9 @@ WindowComponent * Controller::createComponent() {
         WindowComponentData data = WindowComponentData::readData();
         if(select == 1)
             return createLabel(data);
-        if(select == 2)
+        else if(select == 2)
             return createButton(data);
-        if(select == 3) {
+        else if(select == 3) {
             cout << "\n\nSelect type of list to create :"<<endl;
             cout << "1. int " << endl;
             cout << "2. string " << endl;
@@ -75,6 +75,10 @@ WindowComponent * Controller::createComponent() {
                 return createStringListView(data, count);
             }
         }
+        else if(select == 5) {
+            return new Panel(data.getX(), data.getY(), data.getWidth(), data.getHeight(), data.isActive());
+        }
+
     }
 }
 
@@ -137,18 +141,21 @@ void Controller::openControl(WindowComponent *windowComponent) {
     Button * button = dynamic_cast<Button *>(windowComponent);
     ListView<int> * intListView = dynamic_cast<ListView<int>*>(windowComponent);
     ListView<string> * stringListView = dynamic_cast<ListView<string>*>(windowComponent);
+    Panel * panel = dynamic_cast<Panel *>(windowComponent);
 
     bool isLabel = label != nullptr;
     bool isButton = button != nullptr;
     bool isIntListView = intListView != nullptr;
     bool isStringListView = stringListView != nullptr;
+    bool isPanel = panel != nullptr;
 
     if(isLabel)
         maxSelect = 6;
-    if(isButton)
+    else if(isButton)
         maxSelect = 8;
-    if(isIntListView || isStringListView)
+    else if(isIntListView || isStringListView || isPanel)
         maxSelect = 7;
+
 
 
     while(true) {
@@ -168,6 +175,10 @@ void Controller::openControl(WindowComponent *windowComponent) {
         if(isIntListView || isStringListView) {
             cout << "6. Show elements" << endl;
             cout << "7. Add element" << endl;
+        }
+        if(isPanel) {
+            cout << "6. Add component" << endl;
+            cout << "7. Open window component" << endl;
         }
 
         int select = Utils::getIntValueFromConsoleInBounds("Enter number 1-" + to_string(maxSelect) + " :",
@@ -195,9 +206,25 @@ void Controller::openControl(WindowComponent *windowComponent) {
                 label->setText(newText);
             }
 
+            if(isPanel) {
+                if(select == 6)
+                    panel -> addComponent(createComponent());
+                if(select == 7) {
+                    list<WindowComponent*> comps = panel->getComponents();
+                    if(comps.empty())
+                        continue;
+                    cout<<panel->getInfo()<<endl<<endl;
+                    int compIndex = Utils::getIntValueFromConsoleInBounds("Enter number of object to control :", "It's not a number or out of bounds index", 1, comps.size());
+                    auto iterator = comps.begin();
+                    advance(iterator, compIndex - 1);
+                    openControl(*iterator);
+                }
+            }
+
             if(isButton) {
                 buttonControl(button, select);
             }
+
             if(isIntListView || isStringListView){
                 if(select == 6 && isIntListView) {
                     showListViewElems(intListView);
