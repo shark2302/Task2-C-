@@ -29,6 +29,7 @@ private:
 
     template<typename T>
     static void showListViewElems(ListView<T> * l);
+    static Color chooseColorFromConsole();
     static void printHelloFunc();
     static void printByeFunc();
 

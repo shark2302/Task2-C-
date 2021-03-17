@@ -26,7 +26,7 @@ public:
 
     bool isActive() const;
 
-    static WindowComponentData readData();
+    static WindowComponentData readData(bool isLine);
 };
 
 

@@ -34,3 +34,9 @@ string Line::getShortInfo() const {
                   +", "
                    "active = " + to_string(isActive()) +  "}";
 }
+
+string Line::getInfo() const {
+    return "Line :\n\tStartPoint : (" + to_string(startX) + ", " + to_string(startY) + ")\n\tEndPoint : ("
+           + to_string(endX) + ", " + to_string(endY) + ")\n\tActive: " + to_string(isActive())
+           + "\n\tColor: " + Utils::getColorString(color);
+}

@@ -12,11 +12,11 @@ WindowComponentData::WindowComponentData(int posX, int posY, int w, int h, bool 
     active = a;
 }
 
-WindowComponentData WindowComponentData::readData() {
-    int x = Utils::getIntValueFromConsole("Enter x pos :", "Incorrect data");
-    int y = Utils::getIntValueFromConsole("Enter y pos :", "Incorrect data");
-    int width = Utils::getIntValueFromConsole("Enter width :", "Incorrect data");
-    int height = Utils::getIntValueFromConsole("Enter height :", "Incorrect data");
+WindowComponentData WindowComponentData::readData(bool isLine) {
+    int x = Utils::getIntValueFromConsole(!isLine ? "Enter x pos :" : "Enter x of startPoint :", "Incorrect data");
+    int y = Utils::getIntValueFromConsole(!isLine ? "Enter y pos :" : "Enter y of startPoint :", "Incorrect data");
+    int width = Utils::getIntValueFromConsole(!isLine ? "Enter width :" : "Enter x of endPoint :", "Incorrect data");
+    int height = Utils::getIntValueFromConsole(!isLine ? "Enter height :" : "Enter y of endPoint :", "Incorrect data");
     bool a = Utils::getIntValueFromConsoleInBounds("Enter active (0 - false, 1 - true) :", "Incorrect bool value", 0, 1);
     return {x, y, width, height, a};
 }

@@ -30,6 +30,7 @@ public:
     void setStartPoint(int x, int y);
     void setEndPoint(int x, int y);
     virtual string getShortInfo() const;
+    virtual string getInfo() const;
 };
 
 

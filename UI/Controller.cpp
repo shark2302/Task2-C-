@@ -58,7 +58,7 @@ WindowComponent * Controller::createComponent() {
         cout<<"4. Line"<<endl;
         cout<<"5. Panel"<<endl<<endl;
         int select = Utils::getIntValueFromConsoleInBounds("Enter number 1-5 :", "Incorrect number", 1, 5);
-        WindowComponentData data = WindowComponentData::readData();
+        WindowComponentData data = WindowComponentData::readData(select == 4);
         if(select == 1)
             return createLabel(data);
         else if(select == 2)
@@ -74,6 +74,9 @@ WindowComponent * Controller::createComponent() {
             else if(choice == 2) {
                 return createStringListView(data, count);
             }
+        }
+        else if(select == 4) {
+            return new Line(data.getX(), data.getY(), data.getWidth(), data.getHeight(), chooseColorFromConsole(), data.isActive());
         }
         else if(select == 5) {
             return new Panel(data.getX(), data.getY(), data.getWidth(), data.getHeight(), data.isActive());
@@ -137,19 +140,21 @@ void Controller::openControl(WindowComponent *windowComponent) {
     int maxSelect = 5;
     cout<<windowComponent->getInfo()<<endl;
 
-    Label * label = dynamic_cast<Label *>(windowComponent);
-    Button * button = dynamic_cast<Button *>(windowComponent);
-    ListView<int> * intListView = dynamic_cast<ListView<int>*>(windowComponent);
-    ListView<string> * stringListView = dynamic_cast<ListView<string>*>(windowComponent);
-    Panel * panel = dynamic_cast<Panel *>(windowComponent);
+    auto * label = dynamic_cast<Label *>(windowComponent);
+    auto * button = dynamic_cast<Button *>(windowComponent);
+    auto * intListView = dynamic_cast<ListView<int>*>(windowComponent);
+    auto * stringListView = dynamic_cast<ListView<string>*>(windowComponent);
+    auto * panel = dynamic_cast<Panel *>(windowComponent);
+    auto * line = dynamic_cast<Line *>(windowComponent);
 
     bool isLabel = label != nullptr;
     bool isButton = button != nullptr;
     bool isIntListView = intListView != nullptr;
     bool isStringListView = stringListView != nullptr;
     bool isPanel = panel != nullptr;
+    bool isLine = line != nullptr;
 
-    if(isLabel)
+    if(isLabel || isLine)
         maxSelect = 6;
     else if(isButton)
         maxSelect = 8;
@@ -162,23 +167,28 @@ void Controller::openControl(WindowComponent *windowComponent) {
         cout << "\nSelect action to do:" << endl;
         cout << "1. Quit control" << endl;
         cout << "2. Show Component Info" << endl;
-        cout << "3. Change position" << endl;
-        cout << "4. Change size" << endl;
+        string infoForPos = !isLine ? "3. Change position" : "3. Change start pos";
+        cout << infoForPos << endl;
+        string infoForSize = !isLine ? "4. Change size" : "4. Change end point";
+        cout << infoForSize << endl;
         cout << "5. Change active" << endl;
         if (isLabel)
             cout << "6. Change text" << endl;
-        if(isButton) {
+        else if(isButton) {
             cout << "6. Call action" << endl;
             cout << "7. Change button text" << endl;
             cout << "8. Change action" << endl;
         }
-        if(isIntListView || isStringListView) {
+        else if(isIntListView || isStringListView) {
             cout << "6. Show elements" << endl;
             cout << "7. Add element" << endl;
         }
-        if(isPanel) {
+        else if(isPanel) {
             cout << "6. Add component" << endl;
             cout << "7. Open window component" << endl;
+        }
+        else if(isLine) {
+            cout << "6. Change color" << endl;
         }
 
         int select = Utils::getIntValueFromConsoleInBounds("Enter number 1-" + to_string(maxSelect) + " :",
@@ -188,13 +198,19 @@ void Controller::openControl(WindowComponent *windowComponent) {
         else if (select == 2)
             cout << windowComponent->getInfo();
         else if (select == 3) {
-            int x = Utils::getIntValueFromConsole("Enter new x", "Incorrect value");
-            int y = Utils::getIntValueFromConsole("Enter new y", "Incorrect value");
-            windowComponent->changePos(x, y);
+            int x = Utils::getIntValueFromConsole("Enter new x :", "Incorrect value");
+            int y = Utils::getIntValueFromConsole("Enter new y :", "Incorrect value");
+            if(!isLine)
+                windowComponent->changePos(x, y);
+            else
+                line->setStartPoint(x, y);
         } else if (select == 4) {
-            int w = Utils::getIntValueFromConsole("Enter new width", "Incorrect value");
-            int h = Utils::getIntValueFromConsole("Enter new height", "Incorrect value");
-            windowComponent->changeSize(w, h);
+            int w = Utils::getIntValueFromConsole(!isLine ? "Enter new width" : "Enter new x :", "Incorrect value");
+            int h = Utils::getIntValueFromConsole(!isLine ? "Enter new height" : "Enter new y :", "Incorrect value");
+            if(!isLine)
+                windowComponent->changeSize(w, h);
+            else
+                line->setEndPoint(w, h);
         } else if (select == 5) {
             windowComponent->changeActive();
         } else if (select > 5) {
@@ -205,7 +221,9 @@ void Controller::openControl(WindowComponent *windowComponent) {
                 cin >> newText;
                 label->setText(newText);
             }
-
+            if(isLine) {
+                line -> setColor(chooseColorFromConsole());
+            }
             if(isPanel) {
                 if(select == 6)
                     panel -> addComponent(createComponent());
@@ -283,6 +301,26 @@ void Controller::showListViewElems(ListView<T>* l) {
     else{
         cout << "List view isn't active";
     }
+}
+
+Color Controller::chooseColorFromConsole() {
+    cout << "\nSelect color of line:" << endl;
+    cout << "1. Red" << endl;
+    cout << "2. Yellow" << endl;
+    cout << "3. White" << endl;
+    cout << "4. Black" << endl;
+    cout << "5. Blue" << endl;
+    int select = Utils::getIntValueFromConsoleInBounds("Enter number 1-5 :", "Incorrect number", 1, 5);
+    if(select == 1)
+        return Color::RED;
+    else if(select == 2)
+        return Color::YELLOW;
+    else if(select == 3)
+        return Color::WHITE;
+    else if(select == 4)
+        return Color::BLACK;
+    else
+        return Color::BLUE;
 }
 
 void Controller::printHelloFunc() {
