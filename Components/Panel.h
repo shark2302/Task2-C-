@@ -17,6 +17,7 @@ public:
     void addComponent(WindowComponent* component);
     virtual string getShortInfo() const;
     virtual string getInfo() const;
+    ~Panel();
 };
 
 

@@ -45,3 +45,9 @@ string Panel::getInfo() const {
     }
     return res;
 }
+
+Panel::~Panel() {
+    for(auto comp : components) {
+        delete comp;
+    }
+}

@@ -15,8 +15,8 @@ Window * Controller::createWindow() {
     cout<<"Enter window name :";
     string name;
     cin>>name;
-    int width = Utils::getIntValueFromConsole("Enter window width :", "Incorrect width");
-    int height = Utils::getIntValueFromConsole("Enter window height :", "Incorrect height");
+    int width = Utils::getIntValueFromConsoleInBounds("Enter window width :", "Incorrect width", 1, 10000);
+    int height = Utils::getIntValueFromConsoleInBounds("Enter window height :", "Incorrect height", 1, 100000);
     return new Window(width, height, name);
 }
 
@@ -280,11 +280,11 @@ void Controller::buttonControl(Button *button, int select) {
         cout << "\n\nSelect function:" << endl;
         cout << "1. Print hello" << endl;
         cout << "2. Print bye" << endl;
-        int сhoice = Utils::getIntValueFromConsoleInBounds("Enter number 1-2 :", "Incorrect data", 1, 2);
+        int choice = Utils::getIntValueFromConsoleInBounds("Enter number 1-2 :", "Incorrect data", 1, 2);
 
-        if(сhoice == 1)
+        if(choice == 1)
             action = &printHelloFunc;
-        else if(сhoice == 2)
+        else if(choice == 2)
             action = &printByeFunc;
         button->setAction(action);
     }
@@ -293,7 +293,7 @@ template<typename T>
 void Controller::showListViewElems(ListView<T>* l) {
     if (l->isActive()) {
         list<T> list = l->getItems();
-        cout << "\n\nList view elems :";
+        cout << "\n\nList view elems :"<<endl;
         for (auto elem : list) {
             cout << elem << endl;
         }

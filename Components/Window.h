@@ -21,6 +21,7 @@ public:
     string getInfo();
     void addComponent(WindowComponent* component);
     list<WindowComponent*> getComponents();
+    ~Window();
 };
 
 

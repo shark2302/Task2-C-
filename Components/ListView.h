@@ -18,15 +18,17 @@ private:
     list<T> _items;
 public:
 
-     ListView(int x, int y, int w, int h, bool a, list<T> items);
+    ListView(int x, int y, int w, int h, bool a, list<T> items);
 
-     list<T> getItems();
+    list<T> getItems();
 
-     void addElement(T elem);
+    void addElement(T elem);
 
-     string getShortInfo() const override;
+    string getShortInfo() const override;
 
-     string getInfo() const override;
+    string getInfo() const override;
+
+    ~ListView();
 };
 
 template<typename T>
@@ -62,5 +64,14 @@ string ListView<T>::getInfo() const {
            + to_string(getWidth()) + "x" + to_string(getHeight()) + "\n\tActive: " + to_string(isActive())
            + "\n\tElemsCount: " + to_string(_items.size());
 }
+
+template <typename T>
+ListView<T> :: ~ListView<T>() {
+    for(auto item : _items){
+        delete item;
+    }
+}
+
+
 
 #endif //TASK2_C__LISTVIEW_H

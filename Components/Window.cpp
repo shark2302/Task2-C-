@@ -35,3 +35,9 @@ void Window::addComponent(WindowComponent *component) {
 list<WindowComponent *> Window::getComponents() {
     return components;
 }
+
+Window::~Window() {
+    for(auto comp : components) {
+        delete comp;
+    }
+}
